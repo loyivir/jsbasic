@@ -33,16 +33,17 @@ try {
     let amount = new Array(2);
     let budgetMonth = money;
     for(let i = 0; i < 2; i++) {
-      expenses[i] = (prompt('Введите обязательную статью расходов?'));
+      expenses[i] = (prompt('Введите обязательную статью расходов ' + (i+1)));
       amount[i] = (Number(prompt('Во сколько это обойдется?')));
-      console.log(expenses[i] + ': ' + amount[i]);
-      
+           
       if (!Number.isNaN(amount[i])) {
+        console.log(expenses[i] + ': ' + amount[i]);
         budgetMonth -= amount[i];
       }
       else {
         throw new Error('Неверно введены расходы');
       }
+
     }
 
     console.log('Месячный бюджет: ' + budgetMonth);
