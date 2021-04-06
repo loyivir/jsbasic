@@ -15,15 +15,15 @@ function getExpensesMonth(expenses) {
    return sum;
 }
 
-function getAccumulatedMonth(money, expenses) {
-  return money-expenses;
+function getAccumulatedMonth(myMoney, expenseSum) {
+  return myMoney-expenseSum;
 }
 
-function getTargetMonth(money, accumulatedMonth) {
-   if (accumulatedMonth <= 0) {
+function getTargetMonth(myMission, accumMonth) {
+   if (accumMonth <= 0) {
       return -1;
     } else {
-      return Math.ceil(mission / accumulatedMonth);
+      return Math.ceil(myMission / accumMonth);
     }   
 }
 
