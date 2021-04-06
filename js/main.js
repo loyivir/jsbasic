@@ -7,16 +7,46 @@ let mission = 20000;
 let period = 10;
 let budgetDay = money / 30;
 
-console.log(typeof money);
-console.log(typeof income);
-console.log(typeof deposit);
-console.log(addExpenses.length);
-console.log("Период равен " + period + " месяцев");
-console.log("Цель заработать " + mission + " рублей/долларов/гривен/юани");
-console.log(addExpenses.toLowerCase().split(", "));
-console.log("Дневной бюджет: " + budgetDay);
+function getExpensesMonth(expenses) {
+  let sum = 0; 
+  for(let i = 0; i < expenses.length; i++) {
+    sum += expenses[i];
+   }
+   return sum;
+}
 
+function getAccumulatedMonth(money, expenses) {
+  return money-expenses;
+}
+
+function getTargetMonth(money, accumulatedMonth) {
+   if (accumulatedMonth <= 0) {
+      return -1;
+    } else {
+      return Math.ceil(mission / accumulatedMonth);
+    }   
+}
+
+function showTypeOf(value) {
+  console.log(typeof value);
+}
+
+function getStatusIncome(budget) {
+  if (budget >= 1200) {
+      return 'У вас высокий уровень дохода';
+    } else if (budget >= 600) {
+      return 'У вас средний уровень дохода';
+    } else if (budget >= 0) {
+      return 'К сожалению у вас уровень дохода ниже среднего';
+    } else {
+      return 'Что то пошло не так';
+    }
+}
+  showTypeOf(money);
+  showTypeOf(income);
+  showTypeOf(deposit);
 try {
+
     money = Number(prompt('Ваш месячный доход?'));
   
     if (Number.isNaN(money)) {
@@ -25,45 +55,33 @@ try {
 
     addExpenses = (prompt('Перечислите возможные расходы за рассчитываемый период через запятую')).split(', ');
     deposit = !!confirm('Есть ли у вас депозит в банке?');
-    console.log('Месячный доход: ' + money);
+   
     console.log('Возможные расходы: ' + addExpenses);
-    console.log('Депозит в банке: ' + (deposit ? 'да' : 'нет'));
-
+   
     let expenses = new Array(2);
     let amount = new Array(2);
-    let budgetMonth = money;
+   
     for(let i = 0; i < 2; i++) {
       expenses[i] = (prompt('Введите обязательную статью расходов ' + (i+1)));
-      amount[i] = (Number(prompt('Во сколько это обойдется?')));
-           
-      if (!Number.isNaN(amount[i])) {
-        console.log(expenses[i] + ': ' + amount[i]);
-        budgetMonth -= amount[i];
-      }
-      else {
+      amount[i] = (Number(prompt('Во сколько это обойдется?')));           
+      if (Number.isNaN(amount[i])) {       
         throw new Error('Неверно введены расходы');
       }
-
     }
+    console.log('Расходы за месяц: ' + getExpensesMonth(amount));
 
-    console.log('Месячный бюджет: ' + budgetMonth);
-    if (budgetMonth <= 0) {
+    let accumulatedMonth = getAccumulatedMonth(money, getExpensesMonth(amount));
+
+    if (accumulatedMonth <= 0) {
       console.log('При текущем уровне дохода цель не будет достигнута никогда');
     } else {
-      console.log('Цель будет достигнута за ' + Math.ceil(money / budgetMonth) + ' месяцев');
+      console.log('Цель будет достигнута за ' + getTargetMonth(mission, accumulatedMonth) + ' месяцев');
     }
-    budgetDay = budgetMonth / 30;
-    console.log('Бюджет на день: ' + budgetDay);
+    budgetDay = accumulatedMonth / 30;
+    console.log('Бюджет на день: ' + budgetDay.toFixed(2));
 
-    if (budgetDay >= 1200) {
-      console.log('У вас высокий уровень дохода');
-    } else if (budgetDay >= 600) {
-      console.log('У вас средний уровень дохода');
-    } else if (budgetDay >= 0) {
-      console.log('К сожалению у вас уровень дохода ниже среднего');
-    } else {
-      console.log('Что то пошло не так');
-    }
+    console.log(getStatusIncome(budgetDay));
+    
 } catch (e) {
   console.log(e.message + ' Попробуйте еще раз');  
 }
