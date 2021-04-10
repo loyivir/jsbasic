@@ -20,6 +20,8 @@ addIncome: [],
 expenses: {},
 addExpenses:[],
 deposit: false,
+percentDeposit: 0,
+moneyDeposit: 0,
 mission: 50000,
 period: 3,
 budget: money,
@@ -27,7 +29,22 @@ budgetMonth: 0,
 expensesMonth: 0,
 budgetDay: 0,
 asking: function(){
-  let addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую');
+
+  if (confirm('Есть ли у вас дополнительный заработок?')) {
+    let itemIncome;
+    let cashIncome;
+    do {
+      itemIncome = prompt('Какой у вас есть дополнительный заработок?', 'Таксую');
+    } while (isNumber(itemIncome));
+    do {
+      cashIncome = prompt('Сколько в месяц зарабатываете на этом?', 10000);
+    } while (!isNumber(cashIncome));
+    appData.income[itemIncome] = cashIncome;
+  }
+  let addExpenses;
+  do {
+    addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую');
+    } while(isNumber(addExpenses));
   appData.addExpenses = addExpenses.toLowerCase().split(', ');
   appData.deposit = confirm('Есть ли у вас депозит в банке?');
 
@@ -44,7 +61,7 @@ asking: function(){
 },
 getBudget: function(myMoney, expenseSum) {
   appData.budgetMonth = appData.budget - appData.getExpensesMonth();
-  appData.budgetDay = (appData.budgetMonth / 30).toFixed(2);
+  appData.budgetDay = Math.floor(appData.budgetMonth / 30).toFixed(2);
 },
 getExpensesMonth: function() {
    let sum = 0;
@@ -71,7 +88,23 @@ getStatusIncome: function() {
     } else {
       return 'Что то пошло не так';
     }
+},
+getInfoDeposit: function() {
+   if (appData.deposit) {
+     do {
+       // не понятно: процент должен быть строкой или все-таки числом?
+       appData.percentDeposit = prompt('Какойгодовой процент?', '10');
+     } while (isNumber(appData.percentDeposit));
+     do {
+       appData.moneyDeposit = prompt('Какая сумма заложена?', 10000);
+     } while (!isNumber(appData.moneyDeposit));
+  }
+},
+calcSavedMoney: function() {
+  return appData.budgetMonth * appData.period;
+
 }
+
 };
 
 appData.asking();
@@ -91,3 +124,14 @@ console.log('Наша программа включает в себя данны
 for(let key in appData) {
   console.log(key + ':' + appData[key]);
 }
+
+appData.getInfoDeposit();
+console.log(appData.percentDeposit, appData.moneyDeposit, appData.calcSavedMoney());
+
+/*Здесь допустимо изменять данные в appData.addExpenses? Этот кусок кода временный?*/ 
+for (let key in appData.addExpenses) {
+  
+  appData.addExpenses[key] = appData.addExpenses[key].substring(0, 1).toUpperCase() +
+   appData.addExpenses[key].substring(1); 
+}
+console.log(appData.addExpenses.join(', '));
