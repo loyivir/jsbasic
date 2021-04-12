@@ -12,7 +12,7 @@ function start() {
   } while(!isNumber(yourMoney));
   return Number(yourMoney);
 }
-money = start();
+//money = start();
 
 let appData = {
 income: {},
@@ -106,7 +106,7 @@ calcSavedMoney: function() {
 }
 
 };
-
+/*
 appData.asking();
 console.log('Расходы за месяц: ' +  appData.getExpensesMonth());
 
@@ -128,10 +128,28 @@ for(let key in appData) {
 appData.getInfoDeposit();
 console.log(appData.percentDeposit, appData.moneyDeposit, appData.calcSavedMoney());
 
-/*Здесь допустимо изменять данные в appData.addExpenses? Этот кусок кода временный?*/ 
+//Здесь допустимо изменять данные в appData.addExpenses? Этот кусок кода временный?
 for (let key in appData.addExpenses) {
   
   appData.addExpenses[key] = appData.addExpenses[key].substring(0, 1).toUpperCase() +
    appData.addExpenses[key].substring(1); 
 }
 console.log(appData.addExpenses.join(', '));
+*/
+const calculateButton = document.getElementById('start');
+const incomeAddButton = document.getElementsByTagName('button')[0];
+const expensesAddButton = document.getElementsByTagName('button')[1];
+const depositCheckmark = document.querySelector('#deposit-check');
+const additionalIncome = document.querySelectorAll('.additional_income-item');
+const resultElements = document.getElementsByClassName('result')[0];
+const valueElements = resultElements.querySelectorAll('[class*="-value"]');
+const salaryAmount = document.querySelector('.salary-amount');
+const incomeTitle = document.querySelector('.income-title');
+const incomeAmount = document.querySelector('.income-amount');
+const additionalIncomeItem1 = document.querySelectorAll('.additional_income-item')[0];
+const additionalIncomeItem2 = document.querySelectorAll('.additional_income-item')[1];
+const expensesAmount = document.querySelector('.expenses-amount');
+const expensesTitle = document.querySelector('.expenses-title');
+const additionalExpensesItem = document.querySelector('.additional_expenses-item');
+const targetAmount = document.querySelector('.target-amount');
+const periodSelect = document.querySelector('.period-select');
