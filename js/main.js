@@ -13,7 +13,5 @@ class Second extends First {
   }
 }
 
-let first = new First();
 let second = new Second();
-first.hello();
 second.hello();
