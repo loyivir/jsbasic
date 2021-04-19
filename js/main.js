@@ -198,7 +198,7 @@ class AppData {
     }
     incomeAddButton.style.display = "block";
     expensesItems = document.querySelectorAll(".expenses-items");
-    for (let i = this.expensesItems.length - 1; i >= 1; i--) {
+    for (let i = expensesItems.length - 1; i >= 1; i--) {
       expensesItems[i].remove();
     }
     expensesAddButton.style.display = "block";
