@@ -258,7 +258,11 @@ window.addEventListener('DOMContentLoaded', () => {
     };
     const validateMessage = elem => {
       const text = elem.value;
-      elem.value = text.replace(/[^- А-Яа-я]+/g, '');
+      elem.value = text.replace(/[^- А-Яа-я\d,.?!:;]+/g, '');
+    };
+    const validateName = elem => {
+      const text = elem.value;
+      elem.value = text.replace(/[^ А-Яа-я]+/g, '');
     };
     const validateEmail = elem => {
       const text = elem.value;
@@ -266,7 +270,7 @@ window.addEventListener('DOMContentLoaded', () => {
     };
     const validatePhone = elem => {
       const text = elem.value;
-      elem.value = text.replace(/[^-\d)(]+/g, ''); // /\+?[78]([-()]*\d){10}/g
+      elem.value = text.replace(/[^+\d)(]+/g, ''); // /\+?[78]([-()]*\d){10}/g
     };
     const validateInputs = input => {
       let text = input.value;
@@ -288,9 +292,11 @@ window.addEventListener('DOMContentLoaded', () => {
       if (
         target.getAttribute('id') === 'form1-name' ||
         target.getAttribute('id') === 'form2-name' ||
-        target.getAttribute('id') === 'form3-name' ||
-        target.getAttribute('id') === 'form2-message'
+        target.getAttribute('id') === 'form3-name'
       ) {
+        validateName(target);
+      }
+      if (target.getAttribute('id') === 'form2-message') {
         validateMessage(target);
       }
       if (target.classList.contains('form-email')) {
@@ -348,11 +354,121 @@ window.addEventListener('DOMContentLoaded', () => {
     };
     calcBlock.addEventListener('change', event => {
       const target = event.target;
-
-      if (target.matches('select') || target.matches('input')) {
+      if (target.matches('select')) {
+        if (target.selectedIndex === 0) {
+          calcSquare.value = '';
+          calcDay.value = '';
+          calcCount.value = '';
+        }
+        countSum();
+      }
+      if (target.matches('input')) {
         countSum();
       }
     });
   };
   calculator(100);
+
+  // send ajax-form
+  const sendForm = () => {
+    const errorMessage = 'Что-то пошло не так...',
+      loadMessage = 'Загрузка...',
+      successMessage = 'Спасибо! мы скоро с вами свяжемся!';
+
+    const form1 = document.getElementById('form1');
+    const form2 = document.getElementById('form2');
+    const form3 = document.getElementById('form3');
+
+    const statusMessage = document.createElement('div');
+    //statusMessage.textContent = 'Тут будет сообщение';
+    statusMessage.style.cssText = 'font-size: 2rem;';
+    //form.appendChild(statusMessage);
+    const postData = (body, outputData, errorData) => {
+      const request = new XMLHttpRequest();
+      request.addEventListener('readystatechange', () => {
+        if (request.readyState !== 4) {
+          return;
+        }
+        if (request.status === 200) {
+          outputData();
+        } else {
+          errorData(request.status);
+        }
+      });
+      request.open('POST', './server.php');
+      request.setRequestHeader('Content-Type', 'application/json'); //'multipart/form-data'
+
+      request.send(JSON.stringify(body));
+    };
+    form1.addEventListener('submit', event => {
+      event.preventDefault();
+      form1.appendChild(statusMessage);
+      statusMessage.textContent = loadMessage;
+      const formData = new FormData(form1);
+      const body = {};
+      for (const val of formData.entries()) {
+        body[val[0]] = val[1];
+      }
+      postData(
+        body,
+        () => {
+          statusMessage.textContent = successMessage;
+          form1.reset();
+        },
+        error => {
+          statusMessage.textContent = errorMessage;
+          console.error(error);
+          form1.reset();
+        }
+      );
+    });
+
+    form2.addEventListener('submit', event => {
+      event.preventDefault();
+      form2.appendChild(statusMessage);
+      statusMessage.textContent = loadMessage;
+      const formData = new FormData(form2);
+      const body = {};
+      for (const val of formData.entries()) {
+        body[val[0]] = val[1];
+      }
+      postData(
+        body,
+        () => {
+          statusMessage.textContent = successMessage;
+          form2.reset();
+        },
+        error => {
+          statusMessage.textContent = errorMessage;
+          console.error(error);
+          form2.reset();
+        }
+      );
+    });
+
+    form3.addEventListener('submit', event => {
+      event.preventDefault();
+      form3.appendChild(statusMessage);
+      statusMessage.style.cssText = 'font-size: 2rem; color: white;';
+      statusMessage.textContent = loadMessage;
+      const formData = new FormData(form3);
+      const body = {};
+      for (const val of formData.entries()) {
+        body[val[0]] = val[1];
+      }
+      postData(
+        body,
+        () => {
+          statusMessage.textContent = successMessage;
+          form3.reset();
+        },
+        error => {
+          statusMessage.textContent = errorMessage;
+          console.error(error);
+          form3.reset();
+        }
+      );
+    });
+  };
+  sendForm();
 });
