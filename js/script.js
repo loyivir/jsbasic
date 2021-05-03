@@ -55,7 +55,7 @@ window.addEventListener('DOMContentLoaded', () => {
         menu.style.transform = `translate(-100%)`;
       }
     };
-    menu.addEventListener('click', event => {
+    menu.addEventListener('click', (event) => {
       let target = event.target;
       if (target.classList.contains('close-btn')) {
         handlerMenu();
@@ -77,7 +77,7 @@ window.addEventListener('DOMContentLoaded', () => {
       popupBtn = document.querySelectorAll('.popup-btn');
 
     popup.style.opacity = '0%';
-    popupBtn.forEach(elem => {
+    popupBtn.forEach((elem) => {
       elem.addEventListener('click', () => {
         if (screen.width < 768) {
           popup.style.opacity = '100%';
@@ -98,7 +98,7 @@ window.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-    popup.addEventListener('click', event => {
+    popup.addEventListener('click', (event) => {
       let target = event.target;
       if (target.classList.contains('popup-close')) {
         popup.style.display = 'none';
@@ -121,7 +121,7 @@ window.addEventListener('DOMContentLoaded', () => {
       tab = tabHeader.querySelectorAll('.service-header-tab'),
       tabContent = document.querySelectorAll('.service-tab');
 
-    const toggleTabContent = index => {
+    const toggleTabContent = (index) => {
       for (let i = 0; i < tab.length; i++) {
         if (index === i) {
           tab[i].classList.add('active');
@@ -132,7 +132,7 @@ window.addEventListener('DOMContentLoaded', () => {
         }
       }
     };
-    tabHeader.addEventListener('click', event => {
+    tabHeader.addEventListener('click', (event) => {
       let target = event.target;
       target = target.closest('.service-header-tab');
       if (target) {
@@ -153,7 +153,7 @@ window.addEventListener('DOMContentLoaded', () => {
       slider = document.querySelector('.portfolio-content');
     let dot = document.querySelectorAll('.dot');
 
-    dot.forEach(elem => {
+    dot.forEach((elem) => {
       elem.remove();
     });
     for (let i = 0; i < slide.length; i++) {
@@ -187,7 +187,7 @@ window.addEventListener('DOMContentLoaded', () => {
       clearInterval(interval);
     };
 
-    slider.addEventListener('click', event => {
+    slider.addEventListener('click', (event) => {
       event.preventDefault();
       const target = event.target;
 
@@ -217,12 +217,12 @@ window.addEventListener('DOMContentLoaded', () => {
       nextSlide(dot, currentSlide, 'dot-active');
     });
 
-    slider.addEventListener('mouseover', event => {
+    slider.addEventListener('mouseover', (event) => {
       if (event.target.matches('.portfolio-btn') || event.target.matches('.dot')) {
         stopSlide();
       }
     });
-    slider.addEventListener('mouseout', event => {
+    slider.addEventListener('mouseout', (event) => {
       if (event.target.matches('.portfolio-btn') || event.target.matches('.dot')) {
         startSlide(1500);
       }
@@ -234,17 +234,17 @@ window.addEventListener('DOMContentLoaded', () => {
   //slider
   const ourTeam = () => {
     const commandPhotos = document.querySelectorAll('.command__photo');
-    const swapPhotos = img => {
+    const swapPhotos = (img) => {
       const src = img.getAttribute('src'),
         dataImg = img.dataset.img;
       img.dataset.img = src;
       img.setAttribute('src', dataImg);
     };
-    commandPhotos.forEach(elem => {
-      elem.addEventListener('mouseover', event => {
+    commandPhotos.forEach((elem) => {
+      elem.addEventListener('mouseover', (event) => {
         swapPhotos(event.target);
       });
-      elem.addEventListener('mouseout', event => {
+      elem.addEventListener('mouseout', (event) => {
         swapPhotos(event.target);
       });
     });
@@ -252,30 +252,30 @@ window.addEventListener('DOMContentLoaded', () => {
   ourTeam();
 
   const validation = () => {
-    const toNormalCase = elem => {
+    const toNormalCase = (elem) => {
       const text = elem.value;
       elem.value = text.substring(0, 1).toUpperCase() + text.substring(1).toLowerCase();
     };
-    const validateMessage = elem => {
+    const validateMessage = (elem) => {
       const text = elem.value;
       elem.value = text.replace(/[^- А-Яа-я]+/g, '');
     };
-    const validateEmail = elem => {
+    const validateEmail = (elem) => {
       const text = elem.value;
       elem.value = text.replace(/[^-_.!~*'@A-Za-z]+/g, ''); // /\w+@\w+\.\w{2,3}/g
     };
-    const validatePhone = elem => {
+    const validatePhone = (elem) => {
       const text = elem.value;
       elem.value = text.replace(/[^-\d)(]+/g, ''); // /\+?[78]([-()]*\d){10}/g
     };
-    const validateInputs = input => {
+    const validateInputs = (input) => {
       let text = input.value;
       text = text.replace(/^[ -]+|[ -]+$/g, '');
       text = text.replace(/(-+)/g, '-');
       text = text.replace(/( +)/g, ' ');
       input.value = text;
     };
-    document.body.addEventListener('input', event => {
+    document.body.addEventListener('input', (event) => {
       const target = event.target;
       if (target.tagName !== 'INPUT') {
         return;
@@ -300,7 +300,7 @@ window.addEventListener('DOMContentLoaded', () => {
         validatePhone(target);
       }
     });
-    document.body.addEventListener('focusout', event => {
+    document.body.addEventListener('focusout', (event) => {
       const target = event.target;
       if (target.tagName !== 'INPUT') {
         return;
@@ -315,7 +315,7 @@ window.addEventListener('DOMContentLoaded', () => {
       }
     });
   };
-  validation();
+  // validation();
   //Calculator
   const calculator = (price = 100) => {
     const calcBlock = document.querySelector('.calc-block'),
@@ -346,7 +346,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
       calcTotalValue.textContent = total;
     };
-    calcBlock.addEventListener('change', event => {
+    calcBlock.addEventListener('change', (event) => {
       const target = event.target;
 
       if (target.matches('select') || target.matches('input')) {

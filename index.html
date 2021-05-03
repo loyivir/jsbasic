@@ -454,5 +454,46 @@
       </div>
     </div>
     <script src="js/script.js"></script>
+    <script src="plugins/validator/validator.js"></script>
+    <script>
+      const valid = new Validator({
+        selector: '#form1',
+        pattern: {
+          text: /^[- А-Яа-я]+$/,
+        },
+        method: {
+          tel: [['notEmpty'], ['pattern', 'phone']],
+          text: [['notEmpty'], ['pattern', 'text']],
+          email: [['notEmpty'], ['pattern', 'email']],
+        },
+      });
+
+      const valid2 = new Validator({
+        selector: '#form2',
+        pattern: {
+          text: /^[- А-Яа-я]+$/,
+        },
+        method: {
+          tel: [['notEmpty'], ['pattern', 'phone']],
+          text: [['notEmpty'], ['pattern', 'text']],
+          email: [['notEmpty'], ['pattern', 'email']],
+        },
+      });
+
+      const valid3 = new Validator({
+        selector: '#form3',
+        pattern: {
+          text: /^[- А-Яа-я]+$/,
+        },
+        method: {
+          tel: [['notEmpty'], ['pattern', 'phone']],
+          text: [['notEmpty'], ['pattern', 'text']],
+          email: [['notEmpty'], ['pattern', 'email']],
+        },
+      });
+      valid.init();
+      valid2.init();
+      valid3.init();
+    </script>
   </body>
 </html>
