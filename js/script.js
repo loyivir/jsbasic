@@ -40,7 +40,7 @@ window.addEventListener('DOMContentLoaded', () => {
     }
     updateClock();
   }
-  countTimer('April 23, 2021 23:28:00');
+  countTimer('May 23, 2021 23:28:00');
 
   // Меню
   const toggleMenu = () => {
@@ -55,15 +55,12 @@ window.addEventListener('DOMContentLoaded', () => {
         menu.style.transform = `translate(-100%)`;
       }
     };
-    menu.addEventListener('click', event => {
+    menu.addEventListener('click', (event) => {
       let target = event.target;
       if (target.classList.contains('close-btn')) {
         handlerMenu();
-      } else {
-        target = target.closest('li');
-        if (target) {
-          handlerMenu();
-        }
+      } else if (target.closest('a')) {
+        handlerMenu();
       }
     });
     btnMenu.addEventListener('click', handlerMenu);
@@ -77,7 +74,7 @@ window.addEventListener('DOMContentLoaded', () => {
       popupBtn = document.querySelectorAll('.popup-btn');
 
     popup.style.opacity = '0%';
-    popupBtn.forEach(elem => {
+    popupBtn.forEach((elem) => {
       elem.addEventListener('click', () => {
         if (screen.width < 768) {
           popup.style.opacity = '100%';
@@ -98,7 +95,7 @@ window.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-    popup.addEventListener('click', event => {
+    popup.addEventListener('click', (event) => {
       let target = event.target;
       if (target.classList.contains('popup-close')) {
         popup.style.display = 'none';
@@ -121,7 +118,7 @@ window.addEventListener('DOMContentLoaded', () => {
       tab = tabHeader.querySelectorAll('.service-header-tab'),
       tabContent = document.querySelectorAll('.service-tab');
 
-    const toggleTabContent = index => {
+    const toggleTabContent = (index) => {
       for (let i = 0; i < tab.length; i++) {
         if (index === i) {
           tab[i].classList.add('active');
@@ -132,7 +129,7 @@ window.addEventListener('DOMContentLoaded', () => {
         }
       }
     };
-    tabHeader.addEventListener('click', event => {
+    tabHeader.addEventListener('click', (event) => {
       let target = event.target;
       target = target.closest('.service-header-tab');
       if (target) {
@@ -153,7 +150,7 @@ window.addEventListener('DOMContentLoaded', () => {
       slider = document.querySelector('.portfolio-content');
     let dot = document.querySelectorAll('.dot');
 
-    dot.forEach(elem => {
+    dot.forEach((elem) => {
       elem.remove();
     });
     for (let i = 0; i < slide.length; i++) {
@@ -187,7 +184,7 @@ window.addEventListener('DOMContentLoaded', () => {
       clearInterval(interval);
     };
 
-    slider.addEventListener('click', event => {
+    slider.addEventListener('click', (event) => {
       event.preventDefault();
       const target = event.target;
 
@@ -217,12 +214,12 @@ window.addEventListener('DOMContentLoaded', () => {
       nextSlide(dot, currentSlide, 'dot-active');
     });
 
-    slider.addEventListener('mouseover', event => {
+    slider.addEventListener('mouseover', (event) => {
       if (event.target.matches('.portfolio-btn') || event.target.matches('.dot')) {
         stopSlide();
       }
     });
-    slider.addEventListener('mouseout', event => {
+    slider.addEventListener('mouseout', (event) => {
       if (event.target.matches('.portfolio-btn') || event.target.matches('.dot')) {
         startSlide(1500);
       }
@@ -234,17 +231,17 @@ window.addEventListener('DOMContentLoaded', () => {
   //slider
   const ourTeam = () => {
     const commandPhotos = document.querySelectorAll('.command__photo');
-    const swapPhotos = img => {
+    const swapPhotos = (img) => {
       const src = img.getAttribute('src'),
         dataImg = img.dataset.img;
       img.dataset.img = src;
       img.setAttribute('src', dataImg);
     };
-    commandPhotos.forEach(elem => {
-      elem.addEventListener('mouseover', event => {
+    commandPhotos.forEach((elem) => {
+      elem.addEventListener('mouseover', (event) => {
         swapPhotos(event.target);
       });
-      elem.addEventListener('mouseout', event => {
+      elem.addEventListener('mouseout', (event) => {
         swapPhotos(event.target);
       });
     });
@@ -252,34 +249,34 @@ window.addEventListener('DOMContentLoaded', () => {
   ourTeam();
 
   const validation = () => {
-    const toNormalCase = elem => {
+    const toNormalCase = (elem) => {
       const text = elem.value;
       elem.value = text.substring(0, 1).toUpperCase() + text.substring(1).toLowerCase();
     };
-    const validateMessage = elem => {
+    const validateMessage = (elem) => {
       const text = elem.value;
       elem.value = text.replace(/[^- А-Яа-я\d,.?!:;]+/g, '');
     };
-    const validateName = elem => {
+    const validateName = (elem) => {
       const text = elem.value;
       elem.value = text.replace(/[^ А-Яа-я]+/g, '');
     };
-    const validateEmail = elem => {
+    const validateEmail = (elem) => {
       const text = elem.value;
       elem.value = text.replace(/[^-_.!~*'@A-Za-z]+/g, ''); // /\w+@\w+\.\w{2,3}/g
     };
-    const validatePhone = elem => {
+    const validatePhone = (elem) => {
       const text = elem.value;
       elem.value = text.replace(/[^+\d)(]+/g, ''); // /\+?[78]([-()]*\d){10}/g
     };
-    const validateInputs = input => {
+    const validateInputs = (input) => {
       let text = input.value;
       text = text.replace(/^[ -]+|[ -]+$/g, '');
       text = text.replace(/(-+)/g, '-');
       text = text.replace(/( +)/g, ' ');
       input.value = text;
     };
-    document.body.addEventListener('input', event => {
+    document.body.addEventListener('input', (event) => {
       const target = event.target;
       if (target.tagName !== 'INPUT') {
         return;
@@ -306,7 +303,7 @@ window.addEventListener('DOMContentLoaded', () => {
         validatePhone(target);
       }
     });
-    document.body.addEventListener('focusout', event => {
+    document.body.addEventListener('focusout', (event) => {
       const target = event.target;
       if (target.tagName !== 'INPUT') {
         return;
@@ -322,15 +319,18 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   };
   validation();
-  const validateForm = form => {
+  const validateForm = (form) => {
     const inputs = form.querySelectorAll('input');
 
     for (let i = 0; i < inputs.length; i++) {
       if ((inputs[i].type === 'text' || inputs[i].id === 'form2-message') && inputs[i].value.length < 2) {
         return false;
-      } else if (inputs[i].type === 'email' && !/[-_.!~*'A-Za-z]{1,}@{1}[-_.!~*'A-Za-z]{1,}/g.test(inputs[i].value)) {
+      } else if (
+        inputs[i].type === 'email' &&
+        !(/[-_.!~*'A-Za-z]{1,}@{1}[-_.!~*'A-Za-z]{1,}/g.test(inputs[i].value) && inputs[i].value.length > 0)
+      ) {
         return false;
-      } else if (inputs[i].type === 'tel' && !/[+\d)(]{7,11}/g.test(inputs[i].value)) {
+      } else if (inputs[i].type === 'tel' && !/\+?([()]*\d){7,11}/g.test(inputs[i].value)) {
         return false;
       }
     }
@@ -366,7 +366,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
       calcTotalValue.textContent = total;
     };
-    calcBlock.addEventListener('change', event => {
+    calcBlock.addEventListener('change', (event) => {
       const target = event.target;
       if (target.matches('select')) {
         if (target.selectedIndex === 0) {
@@ -398,19 +398,20 @@ window.addEventListener('DOMContentLoaded', () => {
     //statusMessage.textContent = 'Тут будет сообщение';
     statusMessage.style.cssText = 'font-size: 2rem;';
     //form.appendChild(statusMessage);
-    const postData = body => fetch('./server.php', {
-      method: 'POST',
-      mode: 'same-origin',
-      cache: 'default',
-      credentials: 'same-origin',
-      headers: {
-        'Content-type': 'application/json',
-      },
-      redirect: 'follow',
-      referrer: 'client',
-      body: JSON.stringify(body),
-    });
-    const submitForm = form => {
+    const postData = (body) =>
+      fetch('./server.php', {
+        method: 'POST',
+        mode: 'same-origin',
+        cache: 'default',
+        credentials: 'same-origin',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        redirect: 'follow',
+        referrer: 'client',
+        body: JSON.stringify(body),
+      });
+    const submitForm = (form) => {
       form.appendChild(statusMessage);
       statusMessage.style.cssText = 'font-size: 2rem; color: white;';
 
@@ -429,7 +430,7 @@ window.addEventListener('DOMContentLoaded', () => {
         body[val[0]] = val[1];
       }
       postData(body)
-        .then(response => {
+        .then((response) => {
           if (response.status !== 200) {
             throw new Error('status network not 200');
           }
@@ -445,7 +446,7 @@ window.addEventListener('DOMContentLoaded', () => {
             }
           }, 1000);
         })
-        .catch(error => {
+        .catch((error) => {
           statusMessage.textContent = errorMessage;
           console.error(error);
           form.reset();
@@ -460,17 +461,17 @@ window.addEventListener('DOMContentLoaded', () => {
           }, 1000);
         });
     };
-    form1.addEventListener('submit', event => {
+    form1.addEventListener('submit', (event) => {
       event.preventDefault();
       submitForm(form1);
     });
 
-    form2.addEventListener('submit', event => {
+    form2.addEventListener('submit', (event) => {
       event.preventDefault();
       submitForm(form2);
     });
 
-    form3.addEventListener('submit', event => {
+    form3.addEventListener('submit', (event) => {
       event.preventDefault();
       submitForm(form3);
     });
