@@ -6,20 +6,24 @@ const toggleMenu = () => {
   const handlerMenu = () => {
     // menu.classList.toggle('active-menu');
     if (!menu.style.transform || menu.style.transform === `translate(-100%)`) {
-      menu.style.transform = `translate(0)`;
+      menu.style.transform = `translate(0px)`;
     } else {
       menu.style.transform = `translate(-100%)`;
     }
   };
-  menu.addEventListener('click', (event) => {
+  document.body.addEventListener('click', (event) => {
     let target = event.target;
-    if (target.classList.contains('close-btn')) {
+
+    if (target.closest('.menu')) {
       handlerMenu();
-    } else if (target.closest('a')) {
+    } else if (target.classList.contains('close-btn')) {
       handlerMenu();
+    } else if (target.closest('menu > ul > li > a')) {
+      handlerMenu();
+    } else if (!target.closest('menu') && menu.style.transform && menu.style.transform === `translate(0px)`) {
+      menu.style.transform = `translate(-100%)`;
     }
   });
-  btnMenu.addEventListener('click', handlerMenu);
 };
 
 export default toggleMenu;

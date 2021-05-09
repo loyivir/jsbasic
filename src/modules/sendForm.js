@@ -34,11 +34,15 @@ const sendForm = () => {
         return false;
       } else if (
         inputs[i].type === 'email' &&
-        !(/[-_.!~*'A-Za-z]{1,}@{1}[-_.!~*'A-Za-z]{1,}/g.test(inputs[i].value) && inputs[i].value.length > 0)
+        !(/[-_.!~*'A-Za-z0-9]{1,}@{1}[-_.!~*'A-Za-z0-9]{1,}/g.test(inputs[i].value) && inputs[i].value.length > 0)
       ) {
         return false;
-      } else if (inputs[i].type === 'tel' && !/\+?([()]*\d){7,11}/g.test(inputs[i].value)) {
-        return false;
+      } else if (inputs[i].type === 'tel') {
+        const value = inputs[i].value.replace(/[+()]+/g, '');
+
+        if (value.length < 7 || value.length > 11) {
+          return false;
+        }
       }
     }
     return true;
