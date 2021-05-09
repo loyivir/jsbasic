@@ -89,7 +89,6 @@ const sendForm = () => {
         setTimeout(() => {
           statusMessage.remove();
           const target = form.closest('.popup');
-          console.log(target);
           if (target) {
             target.style.display = 'none';
             target.style.opacity = '0%';

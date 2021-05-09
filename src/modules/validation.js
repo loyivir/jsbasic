@@ -13,7 +13,7 @@ const validation = () => {
   };
   const validateEmail = (elem) => {
     const text = elem.value;
-    elem.value = text.replace(/[^-_.!~*'@A-Za-z]+/g, ''); // /\w+@\w+\.\w{2,3}/g
+    elem.value = text.replace(/[^-_.!~*'@A-Za-z0-9]+/g, ''); // /\w+@\w+\.\w{2,3}/g
   };
   const validatePhone = (elem) => {
     const text = elem.value;

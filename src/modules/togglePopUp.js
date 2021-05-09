@@ -16,7 +16,7 @@ const togglePopUp = () => {
       const requestId = setInterval(() => {
         const timePassed = Date.now() - start;
 
-        popup.style.opacity = `${(timePassed / 10).toFixed(0)}%`;
+        popup.style.opacity = `${(timePassed / 3).toFixed(0)}%`;
         if (timePassed >= 1000) {
           clearInterval(requestId);
           return;
